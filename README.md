@@ -23,7 +23,10 @@ This is an "out of tree" package so it must be installed outside of the IsaacLab
 ```bash
 pip install -e .
 ```
-   so that the repositories packages can be accessed from anywhere (e.g. the numpy libraries)
+   so that the repositories packages can be accessed from anywhere (e.g. like the numpy libraries)
+
+### 2. How it works
+This sensor is a mathematically accurate implementation of Time-of-Flight (ToF) hardware built on top of Isaac Lab's core raycasting libraries. As per the [official documentation](https://www.bitcraze.io/documentation/hardware/multi_ranger_deck/multi_ranger_deck-datasheet.pdf) the multi-ranger deck is equipped with 5 [VL53L1x](https://www.st.com/content/ccc/resource/technical/document/datasheet/group3/7d/85/c8/95/fb/3b/4e/2d/DM00452094/files/DM00452094.pdf/jcr:content/translations/en.DM00452094.pdf) senors which have a 27° FOV which can be restricted
 
 
 ### 2. Repository Structure
@@ -63,24 +66,36 @@ MultirangerDeck/
 ```
 
 ### 3. Usage
-We have prepared three progressive demonstrations to validate the sensor. To run them, open your terminal, activate the Isaac Lab environment, and execute the scripts from the repository root.
+We have prepared three progressive demonstrations to validate the sensor. To run them, open your terminal, activate the Isaac Lab environment, and execute the scripts from the IsaacLab root.
 
 1.  Navigate to the root of isaac lab directory:
    `cd ~/IsaacLab`
 
 2. To run the demo simmulation:
 
-    -Demo 1: Basic Wall Validation
+    - Demo 1: Basic Wall Validation
     Tests the sensor's basic directional measurements in a static environment.
 
-    `./isaaclab.sh -p /path to your folder/MultirangerDeck/scripts/demo1_wall_validation.py --headless --enable_cameras`
+    `./isaaclab.sh -p /path_to/MultirangerDeck/scripts/demo1_wall_validation.py --headless --enable_cameras`
+   
+    The drone is teleported to 5 known coordinates inside a 4x4m box. As the robot is teleported it can be seen on terminal parity table comparing the mathematically expected distance to the actual simulated raycast distance. It outputs validation plots showing the accuracy and FoV floor-strike behaviors.
 
-    -Demo 2: Offset Wall Algorithm Validation
+---
+<div align="center">
+  <img src="https://github.com/Samo2108/MultirangerDeck_sensor/blob/main/multimedia/demo1/wall_distance_demo.png"
+       alt="Pearl's banner"
+       width="1200"
+       height="800" />
+</div> 
+
+---
+
+    - Demo 2: Offset Wall Algorithm Validation
     Demonstrates the sensor correctly returning the closest hit within a generated 10-ray cone.
 
-    `./isaaclab.sh -p /path to your folder/MultirangerDeck/scripts/demo2_wall_validation.py --headless --enable_cameras`
+    `./isaaclab.sh -p /path_to/MultirangerDeck/scripts/demo2_wall_validation.py --headless --enable_cameras`
 
-    -Demo 3: Dynamic Pyramid Hover (Terrain Following)
+    - Demo 3: Dynamic Pyramid Hover (Terrain Following)
     A dynamic simulation where a drone uses the Z-down sensor reading in a control loop to maintain a stable 30cm altitude over uneven pyramidal terrain.
    
     `./isaaclab.sh -p /path to your folder/MultirangerDeck/scripts/demo3_pyramid_hover.py --headless --enable_cameras`
